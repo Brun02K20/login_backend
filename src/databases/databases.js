@@ -1,4 +1,5 @@
-import { Sequelize } from "sequelize";
+import pkg from 'sequelize';
+const { Sequelize } = pkg;
 import { UsuariosModel } from "../models/Usuarios.js";
 
 // creando DB usando dialecto MySQL
