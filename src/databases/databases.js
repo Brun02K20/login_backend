@@ -1,6 +1,7 @@
 import pkg from 'sequelize';
 const { Sequelize } = pkg;
 import { UsuariosModel } from "../models/Usuarios.js";
+import { TareasModel } from '../models/Tareas.js';
 
 // creando DB usando dialecto MySQL
 const sequelize = new Sequelize({
@@ -12,6 +13,9 @@ const sequelize = new Sequelize({
 });
 
 sequelize.define("Usuarios", UsuariosModel.usuariosAttributes, UsuariosModel.usuariosMethods);
+sequelize.define("Tareas", TareasModel.tareasAttributes, TareasModel.tareasMethods);
+
+sequelize.models.Tareas.belongsTo(sequelize.models.Usuarios, { foreignKey: "userId" })
 
 try {
     // await sequelize.sync();

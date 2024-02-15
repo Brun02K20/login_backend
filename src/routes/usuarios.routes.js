@@ -12,5 +12,23 @@ router.get("/", async (req, res, next) => {
     }
 })
 
+router.post("/signUp", async (req, res, next) => {
+    try {
+        const user = await usuariosServices.createUser(req.body)
+        return res.json(user)
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.post("/login", async (req, res, next) => {
+    try {
+        const user = await usuariosServices.login(req.body)
+        return res.json(user)
+    } catch (error) {
+        next(error)
+    }
+})
+
 const usuariosRouter = { router }
 export { usuariosRouter }
