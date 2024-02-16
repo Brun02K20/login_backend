@@ -3,16 +3,17 @@ import dotenv from "dotenv"
 dotenv.config()
 
 const tokenExtractorMiddleware = (req, res, next) => {
+    // obtengo el encabezado de autenticacion
     const authorization = req.get("authorization");
     let token = "";
-    if (authorization && authorization.toLowerCase().startsWith("bearer")) {
+    if (authorization && authorization.toLowerCase().startsWith("bearer")) { // si es de esquema bearer
         token = authorization.substring(7);
     }
 
     console.log("hasta la linea de decodedToken llega");
     let decodedToken = {};
     try {
-        decodedToken = jwt.verify(token, process.env.SECRET);
+        decodedToken = jwt.verify(token, process.env.SECRET); // valido la firma
         console.log("TOKEN DECODIFICADO: ", decodedToken);
         req.decodedToken = decodedToken; // Guardamos el token decodificado en el objeto de solicitud para que esté disponible en los controladores posteriores.
         next(); // Pasamos al siguiente middleware o controlador. Que va a ser el endpoint si esta todo OK

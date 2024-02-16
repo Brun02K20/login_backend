@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { sequelize } from "../databases/databases.js";
-import bcrypt, { hash } from 'bcrypt'; // importo bcrypt para el hasheo de contraseñas
+import bcrypt from 'bcrypt'; // importo bcrypt para el hasheo de contraseñas
 import dotenv from "dotenv"
 dotenv.config()
 
@@ -27,8 +27,6 @@ const createUser = async (body) => {
 
         delete user.dataValues.password
 
-
-
     } catch (error) {
         if (error.name === 'SequelizeUniqueConstraintError') {
             if (error.errors[0].path === 'unique_email') {
@@ -52,8 +50,7 @@ const login = async (body) => {
             if (same) { // si son iguales, devuelve el usuario
                 delete rdo.dataValues.password;
                 // Generar token de autenticación
-                // Puedes cambiar 'sexo' por tu propia clave secreta
-                const token = jwt.sign({ userId: rdo.id }, process.env.SECRET, { expiresIn: '1h' });
+                const token = jwt.sign({ userId: rdo.id }, process.env.SECRET, { expiresIn: 300 });
                 return { ...rdo.dataValues, token }
                 // si no, se ejecuta el error correspondiente
             } else {

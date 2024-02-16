@@ -18,6 +18,8 @@ const errorHandler = (error, req, res, next) => {
     if (error instanceof jwt.JsonWebTokenError && error.message === 'invalid signature') {
         // console.log("ENTRO AL ERROR DE FIRMA INVALIDA");
         return res.status(401).json({ error: "TOKEN CON FIRMA INCORRECTA." });
+    } else if (error instanceof jwt.JsonWebTokenError && error.message === 'jwt must be provided') {
+        return res.status(401).json({ error: "TOKEN NO HA SIDO PROVISTO" })
     } else if (error.name === "TokenExpiredError") {
         // console.log("ENTRO AL ERROR DE TOKEN VENCIDO");
         return res.status(401).json({ error: "TOKEN VENCIDO." });

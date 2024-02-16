@@ -15,7 +15,7 @@ router.get("", async (req, res, next) => {
     }
 })
 
-router.post("", tokenExtractorMiddleware, async (req, res, next) => {
+router.post("", tokenExtractorMiddleware, async (req, res, next) => { // extaigo el token y lo valido
     if (!req.decodedToken || !req.decodedToken.userId) {
         return res.status(401).json({ error: "Token no válido" });
     }
